@@ -8,8 +8,8 @@ public class WebScraper {
     public static void main(String[] args) {
 
         try {
-        
-            String url = "https://www.bbc.com/news";
+
+            String url = "https://timesofindia.indiatimes.com/rssfeedstopstories.cms";
 
 
             Document document = Jsoup.connect(url)
@@ -18,20 +18,14 @@ public class WebScraper {
                     .get();
 
 
-            Elements headlines = document.select("h2");
+            Elements headlines = document.select("item > title");
 
-            System.out.println("BBC News Headlines:\n");
+            System.out.println("Times of India Headlines:\n");
 
             int count = 1;
             for (Element headline : headlines) {
-                String text = headline.text();
-
-
-                if (!text.isEmpty()) {
-                    System.out.println(count + ". " + text);
-                    count++;
-                }
-
+                System.out.println(count + ". " + headline.text());
+                count++;
 
                 if (count > 15) {
                     break;
@@ -39,7 +33,7 @@ public class WebScraper {
             }
 
         } catch (Exception e) {
-            System.out.println("Error occurred while scraping: " + e.getMessage());
+            System.out.println("Error occurred: " + e.getMessage());
         }
     }
 }
